@@ -18,7 +18,7 @@ class Navicella {
     };
 
     this.immagine = new Image();
-    this.immagine.src = "navicella.png"; // Assicurati che l'immagine esista
+    this.immagine.src = "navicella.png"; 
 
     this.dimensioneNavicella = 0.55;
 
@@ -151,6 +151,43 @@ addEventListener("keyup", ({ key }) => {
 
   }
 });
+
+class Nemici{
+  constructor(){
+    this.velocita = {
+      x: 0,
+      y: 0
+    };
+    this.posizione = x = Math.random()*(window.innerHeight-200)+ "px";
+    this.dimensione = dimensione;
+
+    this.immagine = new Image();
+    this.immagine.src = "spaceinvader.png"
+
+    this.dimensioneNemico = 0.55;
+    this.width = 50;
+    this.height = 50;
+
+    this.immagine.onload = () => {
+      this.width = this.immagine.width * this.dimensioneNemico;
+      this.height = this.immagine.height * this.dimensioneNemico;
+      this.posizione.x = canvas.width / 2 - this.width / 2;
+      this.posizione.y = canvas.height - this.height - 50;
+    };
+    }
+
+
+
+      genera() {
+        c.drawImage(
+          this.immagine,
+          this.posizione.x,
+          this.posizione.y,
+          this.width,
+          this.height
+        );
+    }
+}
 
 // Avvia l'animazione
 animazione();
