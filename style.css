@@ -1,0 +1,12 @@
+body {
+    margin: 0;         
+    overflow: hidden; 
+    background-image: url(background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
+canvas {
+    display: block;    
+}
