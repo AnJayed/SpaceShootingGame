@@ -152,42 +152,39 @@ addEventListener("keyup", ({ key }) => {
   }
 });
 
-class Nemici{
-  constructor(){
-    this.velocita = {
-      x: 0,
-      y: 0
-    };
-    this.posizione = x = Math.random()*(window.innerHeight-200)+ "px";
-    this.dimensione = dimensione;
+function creaMostro() {
+  let mostro = document.createElement("img");
+  mostro.src = "spaceinvader.png";
+  mostro.className = "mostro";
+  mostro.style.position = "absolute";
+  mostro.style.width = "100px";
+  mostro.style.height = "100px";
+  mostro.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  mostro.style.top = "-100px"; 
 
-    this.immagine = new Image();
-    this.immagine.src = "spaceinvader.png"
-
-    this.dimensioneNemico = 0.55;
-    this.width = 50;
-    this.height = 50;
-
-    this.immagine.onload = () => {
-      this.width = this.immagine.width * this.dimensioneNemico;
-      this.height = this.immagine.height * this.dimensioneNemico;
-      this.posizione.x = canvas.width / 2 - this.width / 2;
-      this.posizione.y = canvas.height - this.height - 50;
-    };
-    }
-
-
-
-      genera() {
-        c.drawImage(
-          this.immagine,
-          this.posizione.x,
-          this.posizione.y,
-          this.width,
-          this.height
-        );
-    }
+  document.body.appendChild(mostro);
 }
+function aggiornaMostri() {
+  let mostri = document.querySelectorAll(".mostro");
+  mostri.forEach((mostro) => {
+    let y = parseInt(mostro.style.top);
+    y += 10; 
+    mostro.style.top = y + "px";
+  });
+}
+setInterval(() => {
+  creaMostro(); 
+}, 2000);
+
+setInterval(() => {
+  aggiornaMostri(); 
+}, 100);
+
+
+
+
+
+
 
 // Avvia l'animazione
 animazione();
