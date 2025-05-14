@@ -10,3 +10,6 @@ body {
 canvas {
     display: block;    
 }
+#mostro{
+    height: 5em;
+}
