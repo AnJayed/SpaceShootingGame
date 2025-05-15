@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Invaders v2</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+    *{
+        box-sizing: border-box;
+    }
+    body{
+        margin: 0;
+        padding: 0;       
+        background-color: black; 
+    }
+    div{
+        text-align: center;
+        color: white;
+    }
+    img{
+        height: 20em;
+        
+    }
+    div ul{
+        font-family: "Press Start 2P", monospace;
+    }
+    div li{
+        padding: 0.4em;
+    }
+    li:hover{
+        transition: ease-in, 1s;
+        color: yellow;
+        transition: ease-out, 1s;
+       
+    }
+  </style>
+</head>
+<body>
+  <div id="title-screen">
+    <img id="logo" src="logogioco.png" alt="logogioco">
+    <ul style="list-style-type: none;" class="menu">
+      <li onclick="iniziaGioco()">Inizia il gioco</li>
+      <li>Opzioni</li>
+      <li onclick="window.close()">Esci</li>
+    </ul>
+  </div>
+
+</body>
+</html>
