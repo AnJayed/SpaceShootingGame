@@ -10,84 +10,81 @@ let suonoSparoPlayer = new Audio("sparo.wav");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-class Navicella {
-  constructor() {
-    this.velocita = {
+
+function creaNavicella() {
+  let navicella = {
+    velocita: {
       x: 0,
       y: 0,
-    };
+    },
+    immagine: new Image(),
+    dimensioneNavicella: 0.55,
+    width: 100,
+    height: 100,
+    posizione: {
+      x: canvas.width / 2 - 50,
+      y: canvas.height - 150,
+    },
+    genera: function () {
+      c.drawImage(
+        this.immagine,
+        this.posizione.x,
+        this.posizione.y,
+        this.width,
+        this.height
+      );
+    },
+    aggiorna: function () {
+      this.posizione.x += this.velocita.x;
+      this.posizione.y += this.velocita.y;
 
-    this.immagine = new Image();
-    this.immagine.src = "navicella.png"; 
+      if (this.posizione.x < 0) this.posizione.x = 0;
+      if (this.posizione.x + this.width > canvas.width)
+        this.posizione.x = canvas.width - this.width;
+      if (this.posizione.y < 0) this.posizione.y = 0;
+      if (this.posizione.y + this.height > canvas.height)
+        this.posizione.y = canvas.height - this.height;
+    },
+  };
 
-    this.dimensioneNavicella = 0.55;
+  navicella.immagine.src = "navicella.png";
+  navicella.immagine.onload = function () {
+    navicella.width = navicella.immagine.width * navicella.dimensioneNavicella;
+    navicella.height = navicella.immagine.height * navicella.dimensioneNavicella;
+    navicella.posizione.x = canvas.width / 2 - navicella.width / 2;
+    navicella.posizione.y = canvas.height - navicella.height - 50;
+  };
 
-    this.width = 100;
-    this.height = 100;
-
-    this.posizione = {
-      x: canvas.width / 2 - this.width / 2,
-      y: canvas.height - this.height - 50,
-    };
-
-    this.immagine.onload = () => {
-      this.width = this.immagine.width * this.dimensioneNavicella;
-      this.height = this.immagine.height * this.dimensioneNavicella;
-      this.posizione.x = canvas.width / 2 - this.width / 2;
-      this.posizione.y = canvas.height - this.height - 50;
-    };
-  }
-
-  genera() {
-    c.drawImage(
-      this.immagine,
-      this.posizione.x,
-      this.posizione.y,
-      this.width,
-      this.height
-    );
-  }
-
-  aggiorna() {
-    this.posizione.x += this.velocita.x;
-    this.posizione.y += this.velocita.y;
-
-    if (this.posizione.x < 0) this.posizione.x = 0;
-    if (this.posizione.x + this.width > canvas.width)
-      this.posizione.x = canvas.width - this.width;
-    if (this.posizione.y < 0) this.posizione.y = 0;
-    if (this.posizione.y + this.height > canvas.height)
-      this.posizione.y = canvas.height - this.height;
-  }
+  return navicella;
 }
 
-class Proiettile {
-  constructor({ posizione, velocita }) {
-    this.posizione = posizione;
-    this.velocita = velocita;
-    this.radius = 5;
-  }
 
-  draw() {
-    c.beginPath();
-    c.arc(this.posizione.x, this.posizione.y, this.radius, 0, Math.PI * 2);
-    c.fillStyle = "red";
-    c.fill();
-    c.closePath();
-  }
 
-  update() {
-    this.draw();
-    this.posizione.x += this.velocita.x;
-    this.posizione.y += this.velocita.y;
-  }
+function creaProiettile({ posizione, velocita }) {
+  return {
+    posizione,
+    velocita,
+    radius: 5,
+    draw: function () {
+      c.beginPath();
+      c.arc(this.posizione.x, this.posizione.y, this.radius, 0, Math.PI * 2);
+      c.fillStyle = "red";
+      c.fill();
+      c.closePath();
+    },
+    update: function () {
+      this.draw();
+      this.posizione.x += this.velocita.x;
+      this.posizione.y += this.velocita.y;
+    },
+  };
 }
 
-// Crea il giocatore e la lista dei proiettili
-let player = new Navicella();
+
+
+let player = creaNavicella();
 let listaProiettili = [];
 
-// Funzione di animazione continua
 function animazione() {
   requestAnimationFrame(animazione);
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -97,12 +94,10 @@ function animazione() {
 
   listaProiettili.forEach((p) => {
     p.update();
-    
-    
   });
 }
 
-// Tasti premuti
+
 let tasti = {
   tastoSinistro: false,
   tastoDestro: false,
@@ -118,10 +113,9 @@ addEventListener("keydown", ({ key }) => {
       tasti.tastoDestro = true;
       player.velocita.x = 5;
       break;
-
-    case " ": 
+    case " ":
       listaProiettili.push(
-        new Proiettile({
+        creaProiettile({
           posizione: {
             x: player.posizione.x + player.width / 2,
             y: player.posizione.y,
@@ -132,7 +126,7 @@ addEventListener("keydown", ({ key }) => {
           },
         })
       );
-      suonoSparoPlayer.currentTime = 0; 
+      suonoSparoPlayer.currentTime = 0;
       suonoSparoPlayer.play();
       break;
   }
@@ -148,9 +142,9 @@ addEventListener("keyup", ({ key }) => {
       tasti.tastoDestro = false;
       if (!tasti.tastoSinistro) player.velocita.x = 0;
       break;
-
   }
 });
+
 
 function creaMostro() {
   let mostro = document.createElement("img");
@@ -160,31 +154,28 @@ function creaMostro() {
   mostro.style.width = "100px";
   mostro.style.height = "100px";
   mostro.style.left = Math.random() * (window.innerWidth - 100) + "px";
-  mostro.style.top = "-100px"; 
+  mostro.style.top = "-100px";
 
   document.body.appendChild(mostro);
 }
+
 function aggiornaMostri() {
   let mostri = document.querySelectorAll(".mostro");
   mostri.forEach((mostro) => {
     let y = parseInt(mostro.style.top);
-    y += 10; 
+    y += 10;
     mostro.style.top = y + "px";
   });
 }
+
 setInterval(() => {
-  creaMostro(); 
+  creaMostro();
 }, 2000);
 
 setInterval(() => {
-  aggiornaMostri(); 
-}, 100);
+  aggiornaMostri();
+}, 300);
 
 
 
-
-
-
-
-// Avvia l'animazione
 animazione();
