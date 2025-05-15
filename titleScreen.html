@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Space Invaders v2</title>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-    *{
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders v2</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+      * {
         box-sizing: border-box;
-    }
-    body{
+      }
+      body {
         margin: 0;
-        padding: 0;       
-        background-color: black; 
-    }
-    div{
+        padding: 0;
+        background-color: black;
+      }
+      div {
         text-align: center;
         color: white;
-    }
-    img{
+      }
+      img {
         height: 20em;
-        
-    }
-    div ul{
-        font-family: "Press Start 2P", monospace;
-    }
-    div li{
-        padding: 0.4em;
-    }
-    li:hover{
         transition: ease-in, 1s;
-        color: yellow;
-        transition: ease-out, 1s;
-       
-    }
-  </style>
-</head>
-<body>
-  <div id="title-screen">
-    <img id="logo" src="logogioco.png" alt="logogioco">
-    <ul style="list-style-type: none;" class="menu">
-      <li onclick="iniziaGioco()">Inizia il gioco</li>
-      <li>Opzioni</li>
-      <li onclick="window.close()">Esci</li>
-    </ul>
-  </div>
+      }
 
-</body>
+      div ul {
+        font-family: "Press Start 2P", monospace;
+      }
+      div li {
+        padding: 0.4em;
+        font-family: "Press Start 2P", monospace;
+        border: 2px solid yellow;
+        margin: 1em auto;
+        width: fit-content;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        cursor: pointer;
+      }
+      li:hover {
+        background-color: rgb(200, 200, 0);
+        color: black;
+      }
+      #video-sfondo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        object-fit: cover;
+        z-index: -1;
+        
+      }
+    </style>
+  </head>
+  <body>
+    <audio autoplay loop muted id="backgroundMusica" src="backgroundMusica.wav"></audio>
+    <video autoplay muted loop id="video-sfondo">
+      <source src="videoplayback.mp4" type="video/mp4" />
+    </video>
+
+    <div>
+      <img id="logo" src="logogioco.png" alt="logogioco" />
+      <ul style="list-style-type: none">
+        <li onclick="window.location.href='index.html'">Inizia il gioco!</li>
+        <li>Come giocare</li>
+        <li onclick="window.close()">Esci</li>
+      </ul>
+    </div>
+  </body>
 </html>
