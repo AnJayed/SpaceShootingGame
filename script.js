@@ -25,7 +25,7 @@ function creaNavicella() {
       x: canvas.width / 2 - 50,
       y: canvas.height - 150,
     },
-    genera: function () {
+    genera() {
       c.drawImage(
         this.immagine,
         this.posizione.x,
@@ -34,7 +34,7 @@ function creaNavicella() {
         this.height
       );
     },
-    aggiorna: function () {
+    aggiorna() {
       this.posizione.x += this.velocita.x;
       this.posizione.y += this.velocita.y;
 
@@ -65,14 +65,14 @@ function creaProiettile({ posizione, velocita }) {
     posizione,
     velocita,
     radius: 5,
-    draw: function () {
+    draw() {
       c.beginPath();
       c.arc(this.posizione.x, this.posizione.y, this.radius, 0, Math.PI * 2);
       c.fillStyle = "red";
       c.fill();
       c.closePath();
     },
-    update: function () {
+    update() {
       this.draw();
       this.posizione.x += this.velocita.x;
       this.posizione.y += this.velocita.y;
