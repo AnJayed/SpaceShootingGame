@@ -6,6 +6,8 @@ let c = canvas.getContext("2d");
 
 let suonoSparoPlayer = new Audio("sparo.wav");
 
+
+
 // Imposta le dimensioni del canvas pari a quelle della finestra
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -13,6 +15,7 @@ canvas.height = window.innerHeight;
 
 function creaNavicella() {
   let navicella = {
+    vita : 100,
     velocita: {
       x: 0,
       y: 0,
@@ -25,6 +28,7 @@ function creaNavicella() {
       x: canvas.width / 2 - 50,
       y: canvas.height - 150,
     },
+    
     genera() {
       c.drawImage(
         this.immagine,
@@ -92,8 +96,8 @@ function animazione() {
   player.aggiorna();
   player.genera();
 
-  listaProiettili.forEach((p) => {
-    p.update();
+  listaProiettili.forEach((proiettile) => {
+    proiettile.update();
   });
 }
 
@@ -155,6 +159,7 @@ function creaMostro() {
   mostro.style.height = "100px";
   mostro.style.left = Math.random() * (window.innerWidth - 100) + "px";
   mostro.style.top = "-100px";
+  
 
   document.body.appendChild(mostro);
 }
@@ -163,7 +168,7 @@ function aggiornaMostri() {
   let mostri = document.querySelectorAll(".mostro");
   mostri.forEach((mostro) => {
     let y = parseInt(mostro.style.top);
-    y += 10;
+    y += 9;
     mostro.style.top = y + "px";
   });
 }
