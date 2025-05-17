@@ -12,7 +12,6 @@
       body {
         margin: 0;
         padding: 0;
-        background-color: black;
       }
       div {
         text-align: center;
@@ -21,17 +20,20 @@
       img {
         height: 20em;
         transition: ease-in, 1s;
+        padding: 0;
+        margin: 0;
       }
 
       div ul {
+        margin-top: 2em; 
         font-family: "Press Start 2P", monospace;
       }
       div li {
         padding: 0.4em;
         font-family: "Press Start 2P", monospace;
         border: 2px solid yellow;
-        margin: 1em auto;
-        width: fit-content;
+        text-align: justify;
+        display: inline-block;
         transition: background-color 0.3s ease, color 0.3s ease;
         cursor: pointer;
       }
@@ -47,7 +49,16 @@
         min-height: 100vh;
         object-fit: cover;
         z-index: -1;
-        
+      }
+      p {
+        color: white;
+        text-align: center;
+        margin: 0.5em auto;
+        max-width: 600px;
+        font-family: "Press Start 2P", monospace;
+      }
+      .instruzioni {
+        margin-bottom: 2em;
       }
     </style>
   </head>
@@ -59,9 +70,18 @@
 
     <div>
       <img id="logo" src="logogioco.png" alt="logogioco" />
+      
+      <div class="instruzioni">
+        <p>Muovi la navicella con:</p>
+        <p>Freccia sinistra → vai a sinistra</p>
+        <p>Freccia destra → vai a destra</p>
+        <p>Spara premendo SPAZIO</p>
+        <p>👾 I mostri scendono dall'alto piano piano...</p>
+        <p>Colpiscili prima che tocchino terra!</p>
+      </div>
+      
       <ul style="list-style-type: none">
-        <li onclick="window.location.href='index.html'">Inizia il gioco!</li>
-        <li onclick="window.location.href=''">Come giocare</li>
+        <li onclick="window.location.href='index.html'">Sono pronto, Inizia il gioco!</li>
         <li onclick="window.close()">Esci</li>
       </ul>
     </div>
