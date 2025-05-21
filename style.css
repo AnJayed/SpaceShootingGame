@@ -1,18 +1,31 @@
-*{
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap");
+* {
+  box-sizing: border-box;
 }
 body {
-    margin: 0;         
-    overflow: hidden; 
-    background-image: url(background.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-
+  margin: 0;
+  overflow: hidden;
+  background-image: url(background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 canvas {
-    display: block;    
+  display: block;
 }
-#mostro{
-    height: 5em;
+
+div {
+  font-family: "Orbitron", sans-serif;
+  color: #00ffcc;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  padding: 10px 20px;
+  border: 3px solid #00ffcc;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+  box-shadow: 0 0 15px #00ffcc;
+  
 }
