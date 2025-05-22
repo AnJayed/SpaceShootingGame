@@ -20,7 +20,6 @@ testoPunteggio.style.top = "20px";
 testoPunteggio.style.left = "20px";
 testoPunteggio.style.fontSize = "24px";
 testoPunteggio.style.transition = "all 1s ease";
-testoPunteggio.style.zIndex = "10";
 
 // Variabili iniziali di gioco
 let punteggio = 0;
@@ -36,7 +35,6 @@ function aggiornaPunteggio() {
 // Crea l'oggetto navicella del giocatore
 function creaNavicella() {
   let navicella = {
-    vita: 100,
     velocita: { x: 0, y: 0 },
     immagine: new Image(),
     dimensioneNavicella: 0.35,
