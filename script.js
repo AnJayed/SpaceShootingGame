@@ -237,11 +237,11 @@ addEventListener("keydown", function (event) {
   switch (key) {
     case "ArrowLeft":
       tasti.tastoSinistro = true;
-      player.velocita.x = -10;
+      player.velocita.x = -15;
       break;
     case "ArrowRight":
       tasti.tastoDestro = true;
-      player.velocita.x = 10;
+      player.velocita.x = 15;
       break;
     case " ":
       listaProiettili.push(
@@ -274,21 +274,43 @@ addEventListener("keyup", function (event) {
   }
 });
 
-// Crea un nuovo mostro ogni 2 secondi con posizione casuale
-setInterval(function () {
+function mostraMostriInBasePunteggio(){
+  let quantiMostri = 1;
+  if (punteggio >= 100) quantiMostri = 2;
+  if (punteggio >= 150) quantiMostri = 3;
+  if (punteggio >= 200) quantiMostri = 4;
+  if (punteggio >= 250) quantiMostri = 5;
+
+  for(let i=0; i < quantiMostri; i++){
   let x = Math.random() * (canvas.width - 100);
-  mostri.push(creaMostro(x, -100));
-}, 2000);
+  mostri.push(creaMostro(x, -100));}
+
+}
+
 
 // Mostra schermata di fine gioco con il punteggio finale
 function mostraGameOver() {
+  let gameOverTesto = document.createElement("div");
+  gameOverTesto.textContent = "GAME OVER";
+  document.body.appendChild(gameOverTesto);
+
+  gameOverTesto.style.position = "absolute";
+  gameOverTesto.style.top = "35%";
+  gameOverTesto.style.left = "50%";
+  gameOverTesto.style.transform = "translate(-50%, -50%)";
+  gameOverTesto.style.fontSize = "64px";
+  gameOverTesto.style.color = "white";
+  gameOverTesto.style.textAlign = "center";
+
   testoPunteggio.textContent = "Il tuo punteggio è: " + punteggio;
   testoPunteggio.style.top = "50%";
   testoPunteggio.style.left = "50%";
   testoPunteggio.style.transform = "translate(-50%, -50%)";
-  testoPunteggio.style.fontSize = "48px";
+  testoPunteggio.style.fontSize = "32px";
   testoPunteggio.style.color = "white";
+  testoPunteggio.style.textAlign = "center";
 }
 
+setInterval(mostraMostriInBasePunteggio, 2000);
 // Avvia l'animazione principale del gioco
 animazione();
