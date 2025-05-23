@@ -7,6 +7,10 @@ let c = canvas.getContext("2d");
 // Carica il suono dello sparo
 let suonoSparoPlayer = new Audio("sparo.wav");
 
+let musicaBackground = new Audio("backgroundMusica.wav");
+musicaBackground.currentTime = 0;
+musicaBackground.play();
+
 // Imposta la larghezza e altezza del canvas in base alla finestra
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -73,7 +77,8 @@ function creaNavicella() {
   navicella.immagine.src = "navicella.png";
   navicella.immagine.onload = function () {
     navicella.width = navicella.immagine.width * navicella.dimensioneNavicella;
-    navicella.height = navicella.immagine.height * navicella.dimensioneNavicella;
+    navicella.height =
+      navicella.immagine.height * navicella.dimensioneNavicella;
     navicella.posizione.x = canvas.width / 2 - navicella.width / 2;
     navicella.posizione.y = canvas.height - navicella.height - 50;
   };
@@ -208,7 +213,7 @@ function aumentaVelocita() {
     });
     velocitaAumentata = true;
   }
-  
+
   // Continua ad aumentare progressivamente la velocità fino a 10
   if (punteggio >= 100) velocitaMostri = 3;
   if (punteggio >= 150) velocitaMostri = 3.5;
@@ -274,19 +279,18 @@ addEventListener("keyup", function (event) {
   }
 });
 
-function mostraMostriInBasePunteggio(){
+function mostraMostriInBasePunteggio() {
   let quantiMostri = 1;
   if (punteggio >= 100) quantiMostri = 2;
   if (punteggio >= 150) quantiMostri = 3;
   if (punteggio >= 200) quantiMostri = 4;
   if (punteggio >= 250) quantiMostri = 5;
 
-  for(let i=0; i < quantiMostri; i++){
-  let x = Math.random() * (canvas.width - 100);
-  mostri.push(creaMostro(x, -100));}
-
+  for (let i = 0; i < quantiMostri; i++) {
+    let x = Math.random() * (canvas.width - 100);
+    mostri.push(creaMostro(x, -100));
+  }
 }
-
 
 // Mostra schermata di fine gioco con il punteggio finale
 function mostraGameOver() {
