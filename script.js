@@ -7,15 +7,17 @@ let c = canvas.getContext("2d");
 // Carica il suono dello sparo
 let suonoSparoPlayer = new Audio("sparo.wav");
 
-let musicaBackground = new Audio("backgroundMusica.wav");
-musicaBackground.currentTime = 0;
+// Carica il suono di sottofondo e lo mette in loop
+let musicaBackground = new Audio("backgroundMusica.m4a");
+musicaBackground.loop = true; 
+musicaBackground.currentTime = 0;1
 musicaBackground.play();
 
 // Imposta la larghezza e altezza del canvas in base alla finestra
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Crea e configura l'elemento DOM per mostrare il punteggio
+// Mostra il punteggio
 let testoPunteggio = document.createElement("div");
 testoPunteggio.textContent = "Punteggio : 0";
 document.body.appendChild(testoPunteggio);
@@ -25,6 +27,18 @@ testoPunteggio.style.left = "20px";
 testoPunteggio.style.fontSize = "24px";
 testoPunteggio.style.transition = "all 1s ease";
 
+let tastoHome = document.createElement("div");
+tastoHome.textContent = "🏠︎";
+tastoHome.style.position = "absolute";
+tastoHome.style.top = "20px";
+tastoHome.style.left = "1450px";
+tastoHome.style.fontSize = "24px";
+tastoHome.setAttribute("id", "tastoHome");
+tastoHome.onclick = function(){
+  window.location.href = "titleScreen.html"
+}
+document.body.appendChild(tastoHome);
+
 // Variabili iniziali di gioco
 let punteggio = 0;
 let velocitaAumentata = false;
@@ -33,19 +47,19 @@ let giocoFinito = false;
 
 // Aggiorna il testo del punteggio
 function aggiornaPunteggio() {
-  testoPunteggio.textContent = "Punteggio : " + punteggio;
+  testoPunteggio.innerHTML = "Punteggio : " + punteggio;
 }
 
 // Crea l'oggetto navicella del giocatore
 function creaNavicella() {
   let navicella = {
-    velocita: { x: 0, y: 0 },
+    velocita: { x: 0 },
     immagine: new Image(),
     dimensioneNavicella: 0.35,
     width: 100,
     height: 100,
     posizione: {
-      x: canvas.width / 2 + 50,
+      x: canvas.width / 2,
       y: 150,
     },
 
@@ -61,24 +75,23 @@ function creaNavicella() {
     },
 
     // Aggiorna la posizione della navicella e impedisce che esca dai bordi
-    aggiorna: function () {
-      this.posizione.x += this.velocita.x;
-
-      if (this.posizione.x < 0) this.posizione.x = 0;
-      if (this.posizione.x + this.width > canvas.width)
+    aggiorna: function () { 
+      this.posizione.x += this.velocita.x; //Aggiunge alla coordinata x della navicella la velocità corrente x. In pratica fa muovere la navicella a destra o sinistra, a seconda del valore di this.velocita.x
+      if (this.posizione.x < 0) this.posizione.x = 0; 
+      if (this.posizione.x + this.width > canvas.width)//Se la navicella è andata oltre il bordo destro dello schermo, la posizione viene corretta in modo che resti dentro il canvas.
         this.posizione.x = canvas.width - this.width;
-      if (this.posizione.y < 0) this.posizione.y = 0;
-      if (this.posizione.y + this.height > canvas.height)
-        this.posizione.y = canvas.height - this.height;
     },
   };
 
   // Imposta l'immagine della navicella e calcola le dimensioni
   navicella.immagine.src = "navicella.png";
+  // la funzione viene eseguita solo dopo che l'immagine è stata completamente caricata quindi onload.
   navicella.immagine.onload = function () {
     navicella.width = navicella.immagine.width * navicella.dimensioneNavicella;
-    navicella.height =
-      navicella.immagine.height * navicella.dimensioneNavicella;
+    navicella.height = navicella.immagine.height * navicella.dimensioneNavicella;
+    console.log(navicella.width);
+    console.log(navicella.height);
+
     navicella.posizione.x = canvas.width / 2 - navicella.width / 2;
     navicella.posizione.y = canvas.height - navicella.height - 50;
   };
@@ -94,12 +107,12 @@ function creaProiettile(parametri) {
       y: parametri.posizione.y,
     },
     velocita: parametri.velocita,
-    radius: 5,
+    raggio: 5,
 
     // Disegna il proiettile
     draw: function () {
       c.beginPath();
-      c.arc(this.posizione.x, this.posizione.y, this.radius, 0, Math.PI * 2);
+      c.arc(this.posizione.x, this.posizione.y, this.raggio, 0, Math.PI * 2);
       c.fillStyle = "red";
       c.fill();
       c.closePath();
@@ -107,7 +120,6 @@ function creaProiettile(parametri) {
 
     // Aggiorna la posizione del proiettile
     update: function () {
-      this.posizione.x += this.velocita.x;
       this.posizione.y += this.velocita.y;
       this.draw();
     },
@@ -148,10 +160,10 @@ function creaMostro(x, y) {
 // Verifica se un proiettile ha colpito un mostro
 function rettangoliCollidono(proiettile, mostro) {
   return (
-    proiettile.posizione.x > mostro.posizione.x &&
-    proiettile.posizione.x < mostro.posizione.x + mostro.width &&
-    proiettile.posizione.y > mostro.posizione.y &&
-    proiettile.posizione.y < mostro.posizione.y + mostro.height
+    proiettile.posizione.x > mostro.posizione.x && //proiettile è a destra del lato sinistro del mostro.
+    proiettile.posizione.x < mostro.posizione.x + mostro.width && //proiettile è a sinistra del lato destro del mostro.
+    proiettile.posizione.y > mostro.posizione.y && //proiettile sotto il bordo superiore del mostro.
+    proiettile.posizione.y < mostro.posizione.y + mostro.height //proiettile sopra il bordo inferiore del mostro.
   );
 }
 
@@ -170,6 +182,7 @@ let animazioneId;
 // Funzione principale del loop di animazione del gioco
 function animazione() {
   animazioneId = requestAnimationFrame(animazione);
+  console.log(animazioneId);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
   player.aggiorna();
@@ -184,6 +197,7 @@ function animazione() {
         listaProiettili.splice(i, 1);
         mostri.splice(j, 1);
         punteggio += 10;
+
         aggiornaPunteggio();
         aumentaVelocita();
       }
@@ -199,7 +213,6 @@ function animazione() {
       giocoFinito = true;
       mostraGameOver();
       cancelAnimationFrame(animazioneId);
-      break;
     }
   }
 }
@@ -281,10 +294,10 @@ addEventListener("keyup", function (event) {
 
 function mostraMostriInBasePunteggio() {
   let quantiMostri = 1;
-  if (punteggio >= 100) quantiMostri = 2;
-  if (punteggio >= 150) quantiMostri = 3;
-  if (punteggio >= 200) quantiMostri = 4;
-  if (punteggio >= 250) quantiMostri = 5;
+  if (punteggio >= 200) quantiMostri = 2;
+  if (punteggio >= 500) quantiMostri = 3;
+  if (punteggio >= 1000) quantiMostri = 4;
+  if (punteggio >= 1500) quantiMostri = 5;
 
   for (let i = 0; i < quantiMostri; i++) {
     let x = Math.random() * (canvas.width - 100);
@@ -315,6 +328,6 @@ function mostraGameOver() {
   testoPunteggio.style.textAlign = "center";
 }
 
-setInterval(mostraMostriInBasePunteggio, 2000);
+setInterval(mostraMostriInBasePunteggio, 3000);
 // Avvia l'animazione principale del gioco
 animazione();

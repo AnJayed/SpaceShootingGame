@@ -27,5 +27,9 @@ div {
   background-color: rgba(0, 0, 0, 0.7);
   text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
   box-shadow: 0 0 15px #00ffcc;
+
   
+}
+#tastoHome{
+  cursor: pointer;
 }
