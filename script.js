@@ -10,7 +10,7 @@ let suonoSparoPlayer = new Audio("sparo.wav");
 // Carica il suono di sottofondo e lo mette in loop
 let musicaBackground = new Audio("backgroundMusica.m4a");
 musicaBackground.loop = true; 
-musicaBackground.currentTime = 0;1
+musicaBackground.currentTime = 0;
 musicaBackground.play();
 
 // Imposta la larghezza e altezza del canvas in base alla finestra
